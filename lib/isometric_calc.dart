@@ -3,6 +3,10 @@ import 'dart:math';
 class Point2D {
   double x, y;
   Point2D(this.x, this.y);
+
+  Point2D offsetted(double dx, double dy) {
+    return Point2D(x + dx, y + dy);
+  }
 }
 
 class Point3D {
