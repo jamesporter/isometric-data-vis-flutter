@@ -4,8 +4,8 @@ import 'dart:math';
 
 class IsoVisPainter extends CustomPainter {
   double dt;
-
-  IsoVisPainter(this.dt);
+  double scale;
+  IsoVisPainter(this.dt, this.scale);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -28,8 +28,8 @@ class IsoVisPainter extends CustomPainter {
                 i.toDouble() * 4,
                 (2 + 18 * dt) * cos(31.4 * dt + i / (2 + j / 5)),
                 j.toDouble() * 10.0)
-            .intoIso2D(2)
-            .offsetted(size.width / 2, size.height * 0.5 + 100);
+            .intoIso2D(2 + scale / 3)
+            .offsetted(size.width / 2, size.height * 0.5 + 100 + 20 * scale);
 
         if (i == 0) {
           linePath.moveTo(xy.x, xy.y);

@@ -26,6 +26,7 @@ class IsoPage extends StatefulWidget {
 class _IsoPageState extends State<IsoPage> with SingleTickerProviderStateMixin {
   AnimationController controller;
   bool playing = true;
+  double scale = 1.0;
 
   @override
   void initState() {
@@ -49,13 +50,28 @@ class _IsoPageState extends State<IsoPage> with SingleTickerProviderStateMixin {
       ),
       body: Padding(
           padding: EdgeInsets.all(8.0),
-          child: AnimatedBuilder(
-              animation: controller,
-              builder: (context, child) {
-                return CustomPaint(
-                    painter: IsoVisPainter(controller.value),
-                    child: Container());
-              })),
+          child: Stack(
+            children: <Widget>[
+              AnimatedBuilder(
+                  animation: controller,
+                  builder: (context, child) {
+                    return CustomPaint(
+                        painter: IsoVisPainter(controller.value, scale),
+                        child: Container());
+                  }),
+              Positioned(
+                top: 0,
+                right: 0,
+                left: 0,
+                child: Slider(
+                  value: scale,
+                  min: 1.0,
+                  max: 10.0,
+                  onChanged: (s) => setState(() => scale = s),
+                ),
+              )
+            ],
+          )),
       floatingActionButton: playing
           ? FloatingActionButton(
               onPressed: () {
